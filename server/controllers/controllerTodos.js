@@ -68,7 +68,25 @@ class controllerTodos {
     }
 
     static delete(req, res){
-
+        let id = req.params.id;
+        let deletedTodo = null;
+        Todo.findByPk(id)
+            .then((deleted) => {
+                if (deleted === null) {
+                    res.status(404).json({ errors: "Not Found!" })
+                } else {
+                    deletedTodo = deleted;
+                    return Todo.destroy({ where: { id } });
+                }
+            })
+            .then((result) => {
+                if (result === 1) {
+                    res.status(200).json({ deletedTodo });
+                }
+            })
+            .catch((err) => {
+                res.status(500).json(err);
+            });
     }
 }
 
