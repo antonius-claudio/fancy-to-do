@@ -11,7 +11,8 @@ class controllerTodos {
         })
             .then((newTodo) => {
                 res.status(201).json({ newTodo });
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 if (err.errors) {
                     res.status(400).json({ errors: err.errors , message: "Invalid user input, error while writing to database!" });
                 } else {
@@ -24,7 +25,8 @@ class controllerTodos {
         Todo.findAll()
             .then((todos) => {
                 res.status(200).json({ todos });
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 res.status(500).json({ errors: err , message: "Error while reading to database!" });
             });
     }
@@ -38,7 +40,8 @@ class controllerTodos {
                 } else {
                     res.status(200).json({ todo });
                 }
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 res.status(500).json({ errors: err , message: "Error while reading to database!" });
             });
     }
@@ -58,7 +61,8 @@ class controllerTodos {
                 } else {
                     res.status(404).json({ errors: "ID is not registered!"});
                 }
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 if (err.errors) {
                     res.status(400).json({ errors: err.errors });
                 } else {
