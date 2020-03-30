@@ -13,9 +13,9 @@ class controllerTodos {
                 res.status(201).json({ newTodo });
             }).catch((err) => {
                 if (err.errors) {
-                    res.status(400).json({ errors: err.errors });
+                    res.status(400).json({ errors: err.errors , message: "Invalid user input, error while writing to database!" });
                 } else {
-                    res.status(500).json(err);
+                    res.status(500).json({ errors: err , message: "Error while writing to database!" });
                 }          
             });
     }
@@ -25,7 +25,7 @@ class controllerTodos {
             .then((todos) => {
                 res.status(200).json({ todos });
             }).catch((err) => {
-                res.status(500).json(err);
+                res.status(500).json({ errors: err , message: "Error while reading to database!" });
             });
     }
 
@@ -39,7 +39,7 @@ class controllerTodos {
                     res.status(200).json({ todo });
                 }
             }).catch((err) => {
-                res.status(500).json(err);
+                res.status(500).json({ errors: err , message: "Error while reading to database!" });
             });
     }
 
@@ -62,7 +62,7 @@ class controllerTodos {
                 if (err.errors) {
                     res.status(400).json({ errors: err.errors });
                 } else {
-                    res.status(500).json(err);
+                    res.status(500).json({ errors: err , message: "Error while update to database!" });
                 }
             });
     }
@@ -85,7 +85,7 @@ class controllerTodos {
                 }
             })
             .catch((err) => {
-                res.status(500).json(err);
+                res.status(500).json({ errors: err , message: "Error while delete at database!" });
             });
     }
 }
