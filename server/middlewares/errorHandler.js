@@ -8,11 +8,13 @@ const errorHandler = function (err, req, res, next) {
             errors.push(e.message);
         });
     }
-    console.log(errors)
     if (err.msg) {
         errors = [];
         errors.push(err.msg);
         status = 404;
+        if (err.status) {
+            status = err.status;
+        }
     }
     res.status(status).json(errors)
 }

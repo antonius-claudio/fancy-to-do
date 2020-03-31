@@ -1,14 +1,15 @@
 const router = require('express').Router();
 const controller = require('../controllers/controllerTodos');
+const authorization = require('../middlewares/authorization');
 
 router.post('/', controller.create);
 
 router.get('/', controller.getTodos);
 
-router.get('/:id', controller.getById);
+router.get('/:id', authorization, controller.getById);
 
-router.put('/:id', controller.update);
+router.put('/:id', authorization,controller.update);
 
-router.delete('/:id', controller.delete);
+router.delete('/:id', authorization, controller.delete);
 
 module.exports = router;

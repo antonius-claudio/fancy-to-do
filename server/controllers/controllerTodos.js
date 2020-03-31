@@ -2,13 +2,15 @@ const { Todo } = require('../models');
 
 class controllerTodos {
     static create(req, res, next){
-        let { title, description, status, due_date } = req.body;
-        Todo.create({
-            title,
-            description,
-            status,
-            due_date
-        })
+        console.log(req.body)
+        let form = {
+            title: req.body.title,
+            description: req.body.description,
+            status: req.body.status,
+            due_date: req.body.due_date,
+            UserId: req.UserId
+        }
+        Todo.create(form)
             .then((newTodo) => {
                 res.status(201).json({ newTodo });
             })
@@ -24,7 +26,7 @@ class controllerTodos {
     }
 
     static getTodos(req, res, next){
-        Todo.findAll()
+        Todo.findAll({ where: { UserId: req.UserId } })
             .then((todos) => {
                 res.status(200).json({ todos });
             })
