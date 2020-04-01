@@ -1,16 +1,25 @@
 const { User } = require('../models');
-const jwt = require('jsonwebtoken'); // pakai jsonwebtoken untuk mengubah payload menjadi random string (token)
 const { checkPassword } = require('../helpers/bcrypt');
+const { jwtToken } = require('../helpers/jwt');
+
 
 class controllerUser {
     static register(req, res, next){
         let form = { email: req.body.email, password: req.body.password };
-        User.create(form)
+        User.findOne({ where: { email: form.email } })
+            .then((user) => {
+                if (user) {
+                    throw { msg: "Email already in use!", status: 400 }
+                } else {
+                    return User.create(form)
+                }
+            })
             .then((result) => {
-                let token = jwt.sign({
-                    UserId : result.id,
-                    email: result.email
-                }, process.env.secret );
+                console.log('test', process.env.secret)
+                let token = jwtToken({
+                        UserId : result.id,
+                        email: result.email
+                    })
                 res.status(201).json({ token });
             })
             .catch(next);
@@ -23,10 +32,10 @@ class controllerUser {
                 if (result) {
                     const isPasswordValid = checkPassword(form.password, result.password);
                     if (isPasswordValid) {
-                        let token = jwt.sign({
+                        let token = jwtToken({
                             UserId : result.id,
                             email: result.email
-                        }, process.env.secret );
+                        })
                         res.status(200).json({ token });
                     } else {
                         throw { msg: "Wrong Password!", status: 401 }

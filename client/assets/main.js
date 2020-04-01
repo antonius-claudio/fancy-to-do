@@ -33,8 +33,8 @@ $(document).ready(() => {
 
     $('#formRegister').submit(function (e) {
         e.preventDefault();
-        let email = $('emailRegister').val();
-        let password = $('passwordRegister').val();
+        let email = $('#emailRegister').val();
+        let password = $('#passwordRegister').val();
         // M.toast({html: 'Registered'});
         
         // AJAX POST
@@ -47,10 +47,13 @@ $(document).ready(() => {
             }
         })
         .done((result) => {
-            $('.test').append(`<p>berhasil: ${JSON.stringify(result)}</p>`);
+            console.log(result)
+            $('.test').append(`<p>Registered: ${JSON.stringify(result)}</p>`);
         })
         .fail((err) => {
-            M.toast({html: `Error : ${JSON.stringify(err)}`});
+          err.responseJSON.forEach(i => {
+              M.toast({html: `${i}`});
+            })
         })
     });
 })
