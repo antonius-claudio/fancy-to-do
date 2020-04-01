@@ -19,7 +19,7 @@ class controllerTodos {
         let form = {
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
+            status: 'Belum',
             due_date: req.body.due_date,
             UserId: req.UserId
         }
@@ -39,7 +39,7 @@ class controllerTodos {
     }
 
     static getTodos(req, res, next){
-        Todo.findAll({ where: { UserId: req.UserId } })
+        Todo.findAll({ where: { UserId: req.UserId, status: 'Belum' } })
             .then((todos) => {
                 res.status(200).json({ todos });
             })
@@ -71,17 +71,14 @@ class controllerTodos {
     }
 
     static update(req, res, next){
-        let { title, description, status, due_date } = req.body;
+        // let { title, description, status, due_date } = req.body;
         let id = req.params.id;
         Todo.update({
-            title,
-            description,
-            status,
-            due_date
+            status: 'Selesai'
         }, { where: { id } })
             .then((updateTodo) => {
                 if (updateTodo[0] === 1) {
-                    res.status(200).json({ updateTodo: { title, description, status, due_date } });
+                    res.status(200).json({ updateTodo: { id } });
                 } else {
                     throw { msg: "ID is not registered!"}
                     // res.status(404).json({ errors: "ID is not registered!"});

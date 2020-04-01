@@ -6,24 +6,32 @@ body {
     padding: 0 30px;
 }
 
-#divRegister {
+.menu li:hover{
+    cursor: pointer;
+}
+
+#divRegister, #divLogin {
     margin-top: 10%;
 }
 
-#divRegister .row .col.s4 {
+#divRegister .row .col.s4, #divLogin .row .col.s4 {
     border: 1px solid #e87171;
     border-radius: 5px;
 }
 
-#divRegister h3 {
+#divRegister h3 , #divLogin h3{
     text-align: center;
     color: #737373;
 }
 
-#divRegister form {
+#divRegister form, #divLogin form{
     border-top: #4b6fc69e solid 2px;
 }
 
-#divRegister .btnRegis {
+#divRegister .btnRegis , #divLogin .btnLogin{
     text-align: end;
+}
+
+.selectd {
+    background-color: #e87171;
 }

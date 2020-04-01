@@ -30,11 +30,11 @@
                 <h3>Register</h3>
                 <form id="formRegister">
                     <div class="input-field col s12">
-                        <input id="emailRegister" type="text" class="validate" name="email">
+                        <input id="emailRegister" placeholder="Email" type="text" class="validate" name="email">
                         <label for="email">Email</label>
                     </div>
                     <div class="input-field col s12">
-                        <input id="passwordRegister" type="password" class="validate" name="password">
+                        <input id="passwordRegister" placeholder="Password" type="password" class="validate" name="password">
                         <label for="password">Password</label>
                     </div>
                     <div class="input-field col s12 btnRegis">
@@ -45,15 +45,78 @@
                 </form>
             </div>
         </div>
-        <div class="test">
-
-        </div>
     </div>
     <div class="container" id="divLogin">
-        <h1>login</h1>
+        <div class="row">
+            <div class="col s4 offset-s4">
+                <h3>login</h3>
+                <form id="formLogin">
+                    <div class="input-field col s12">
+                        <input id="emailLogin" placeholder="Email" type="text" class="validate" name="email">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="passwordLogin" placeholder="Password" type="password" class="validate" name="password">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-field col s12 btnLogin">
+                        <button class="btn waves-effect waves-light" type="submit">Login
+                            <i class="material-icons right">person</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="container" id="divTodo">
-        <h1>Todo</h1>
+        <div class="head">
+            <h3>Todo</h3>
+        </div>
+        <div class="btn" id="btnAddTodo">
+            Add Todo
+        </div>
+        <div class="btn" id="btnDeleteTodo">
+            Delete Todo
+        </div>
+        <div class="btn" id="btnUpdateTodo">
+            Complete Todo
+        </div>
+        <form id="formAdd">
+            <div class="input-field col s12">
+                <input id="titleTodo" placeholder="Title" type="text" class="validate" name="title">
+                <label for="title">Title</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="descriptionTodo" placeholder="Description" type="text" class="validate" name="description">
+                <label for="description">Description</label>
+            </div>
+            <!-- <div class="input-field col s12">
+                <input id="statusTodo" placeholder="Status" type="text" class="validate" name="status">
+                <label for="status">Status</label>
+            </div> -->
+            <div class="input-field col s12">
+                <input id="dueDateTodo" placeholder="Due Date" type="text" class="datepicker" name="dueDate">
+                <label for="dueDate">Due Date</label>
+            </div>
+            <div class="input-field col s12 btnAdd">
+                <button class="btn waves-effect waves-light" type="submit">Add
+                    <i class="material-icons right">add</i>
+                </button>
+            </div>
+        </form>
+        <div id="listTodo" class="content">
+            <table>
+                <thead>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                </thead>
+                <tbody id="dataTodos">
+
+                </tbody>
+            </table>
+        </div>
     </div>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
