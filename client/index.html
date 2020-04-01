@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="186716819750-464f22o9fbs6v4l36c79udr0n5532bea.apps.googleusercontent.com">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
@@ -37,7 +38,8 @@
                         <input id="passwordRegister" placeholder="Password" type="password" class="validate" name="password">
                         <label for="password">Password</label>
                     </div>
-                    <div class="input-field col s12 btnRegis">
+                    <div class="g-signin2 col s6" data-onsuccess="onSignIn"></div>
+                    <div class="input-field col s6 btnRegis">
                         <button class="btn waves-effect waves-light" type="submit">Register
                             <i class="material-icons right">send</i>
                         </button>
@@ -59,7 +61,8 @@
                         <input id="passwordLogin" placeholder="Password" type="password" class="validate" name="password">
                         <label for="password">Password</label>
                     </div>
-                    <div class="input-field col s12 btnLogin">
+                    <div class="g-signin2 col s6" data-onsuccess="onSignIn"></div>
+                    <div class="input-field col s6 btnLogin">
                         <button class="btn waves-effect waves-light" type="submit">Login
                             <i class="material-icons right">person</i>
                         </button>
@@ -120,6 +123,65 @@
     </div>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        let token = googleUser.getAuthResponse().id_token;
+        $.ajax({
+            url: 'http://localhost:3000/google-sign-in',
+            method: 'POST',
+            data: {
+                token
+            }
+        })
+        .done((result) => {
+          M.toast({html: `Welcome and wait a sec ...`, completeCallback: function(){ 
+            localStorage.setItem('token', result.token)
+            /// ambil data todos
+            $.ajax({
+              url: "http://localhost:3000/todos",
+              method: 'GET',
+              headers: {
+                token: result.token
+              }
+            })
+            .done((result) => {
+              result.todos.forEach(i => {
+                $('#dataTodos').append(`
+                  <tr class="todo" data-todoID="${i.id}">
+                    <td>${i.title}</td>
+                    <td>${i.description}</td>
+                    <td>${i.status}</td>
+                    <td>${i.due_date}</td>
+                  </tr>
+                `);
+              })
+            })
+            .fail((err) => {
+              M.toast({html: `${err}`});
+            })
+            // ----------------------------------
+            $('#menuRegis').hide();
+            $('#menuLogin').hide();
+            $('#menuTodo').show();
+            $('#menuLogout').show();
+            $('#divRegister').hide();
+            $('#divLogin').hide();
+            $('#divTodo').show();
+          }});
+      })
+      .fail((err) => {
+        err.responseJSON.forEach(i => {
+            M.toast({html: `${i}`});
+        })
+      })
+    }
+    </script>
     <script src="./assets/main.js"></script>
 </body>
 </html>

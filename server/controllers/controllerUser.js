@@ -15,7 +15,6 @@ class controllerUser {
                 }
             })
             .then((result) => {
-                console.log('test', process.env.secret)
                 let token = jwtToken({
                         UserId : result.id,
                         email: result.email

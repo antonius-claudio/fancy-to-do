@@ -35,3 +35,8 @@ body {
 .selectd {
     background-color: #e87171;
 }
+
+.g-signin2{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
