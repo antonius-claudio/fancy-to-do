@@ -1,0 +1,29 @@
+body {
+    background-color: #c5eedf57;
+}
+
+.menu li {
+    padding: 0 30px;
+}
+
+#divRegister {
+    margin-top: 10%;
+}
+
+#divRegister .row .col.s4 {
+    border: 1px solid #e87171;
+    border-radius: 5px;
+}
+
+#divRegister h3 {
+    text-align: center;
+    color: #737373;
+}
+
+#divRegister form {
+    border-top: #4b6fc69e solid 2px;
+}
+
+#divRegister .btnRegis {
+    text-align: end;
+}

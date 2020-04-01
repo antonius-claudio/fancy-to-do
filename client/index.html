@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>Fancy To Do</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Fancy To Do</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down menu">
+            <li id="menuRegis">Register</li>
+            <li id="menuLogin">Login</li>
+            <li id="menuTodo">Todo</li>
+            <li id="menuLogout">Logout</li>
+        </ul>
+        </div>
+    </nav>
+    <div class="container" id="divRegister">
+        <div class="row">
+            <div class="col s4 offset-s4">
+                <h3>Register</h3>
+                <form id="formRegister">
+                    <div class="input-field col s12">
+                        <input id="emailRegister" type="text" class="validate" name="email">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="passwordRegister" type="password" class="validate" name="password">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-field col s12 btnRegis">
+                        <button class="btn waves-effect waves-light" type="submit">Register
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="test">
+
+        </div>
+    </div>
+    <div class="container" id="divLogin">
+        <h1>login</h1>
+    </div>
+    <div class="container" id="divTodo">
+        <h1>Todo</h1>
+    </div>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/main.js"></script>
+</body>
+</html>
