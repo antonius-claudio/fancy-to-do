@@ -14,7 +14,7 @@ body {
     margin-top: 10%;
 }
 
-#divRegister .row .col.s4, #divLogin .row .col.s4 {
+#divRegister .row .conten, #divLogin .row .conten {
     border: 1px solid #e87171;
     border-radius: 5px;
 }
