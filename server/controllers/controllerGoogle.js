@@ -46,7 +46,11 @@ class controllerGoogle {
             console.log('d')
             res.status(201).json({ token: tokenToUser });
         })
-        .catch(next)
+        .catch((err) => {
+            console.log(err)
+            next(err)
+        })
+        // .catch(next)
     }
 }
 

@@ -7,6 +7,7 @@ const router = require('./routes');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+console.log(`test env gak kebaca `, process.env.secret)
 app.use(cors());
 app.use(router);
 
