@@ -6,7 +6,7 @@ router.post('/', controller.create);
 
 router.get('/', controller.getTodos);
 
-router.get('/:id/event', authorization, controller.addEvent);
+router.get('/event/:id', authorization, controller.addEvent);
 
 router.get('/:id', authorization, controller.getById);
 

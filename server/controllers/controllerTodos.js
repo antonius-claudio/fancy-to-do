@@ -119,6 +119,9 @@ class controllerTodos {
     }
 
     static addEvent(req, res, next){
+        // console.log('masuk controller user')
+        // console.log(req.params.id)
+        // console.log(req.UserId)
         Todo.findOne({where: { id: req.params.id } , include: User})
             .then((todo) => {
                 var event = {
@@ -174,27 +177,7 @@ class controllerTodos {
                         }
                     }
                 )
-                // return calendar.freebusy.query({resource: {
-                //     timeMin: new Date(),
-                //     timeMax: new Date(todo.due_date),
-                //     timeZone: 'Asia/Jakarta',
-                //     items: [{ id: 'primary'}]
-                // }})
             })
-            // .then((result) => {
-            //     const eventsArr = result.data.calendars.primary.busy;
-            //     if (eventsArr.length === 0) {
-            //         return calendar.events.insert(
-            //             { calendarId: 'primary', resource: event },
-            //             err => {
-            //                 if (err) {
-            //                     throw { msg: 'Calendar Event Error', status:500 }
-            //                 }
-            //                 return res.status(200).json({message: 'Calendar Create'})
-            //             }
-            //         )
-            //     }
-            // })
             .catch(next);
     }
 }
