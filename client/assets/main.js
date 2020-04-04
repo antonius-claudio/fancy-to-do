@@ -1,6 +1,6 @@
-if (!localStorage.getItem('token')) {
-  $('#formRegister').submit(function (e) {
-      e.preventDefault();
+$('#formRegister').submit(function (e) {
+    e.preventDefault();
+    if (!localStorage.getItem('token')) {
       let email = $('#emailRegister').val();
       let password = $('#passwordRegister').val();
       
@@ -20,17 +20,20 @@ if (!localStorage.getItem('token')) {
             $('#passwordRegister').val('');
             page();
           }});
-
+  
       })
       .fail((err) => {
         err.responseJSON.forEach(i => {
             M.toast({html: `${i}`});
           })
       })
-  });
+    }
+});
 
-  $('#formLogin').submit(function (e) {
-    e.preventDefault();
+$('#formLogin').submit(function (e) {
+  e.preventDefault();
+  if (!localStorage.getItem('token')) {
+    console.log('masuk klik login')
     let email = $('#emailLogin').val();
     let password = $('#passwordLogin').val();
     // AJAX POST
@@ -43,6 +46,7 @@ if (!localStorage.getItem('token')) {
         }
     })
     .done((result) => {
+      console.log('masuk ')
         M.toast({html: `Welcome and wait a sec ...`, completeCallback: function(){ 
           localStorage.setItem('token', result.token);
           $('#emailLogin').val('');
@@ -55,9 +59,11 @@ if (!localStorage.getItem('token')) {
           M.toast({html: `${i}`});
       })
     })
-  });
+  }
+});
 
-  function onSignIn(googleUser) {
+function onSignIn(googleUser) {
+  if (!localStorage.getItem('token')) {
     var profile = googleUser.getBasicProfile();
     // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     // console.log('Name: ' + profile.getName());
@@ -72,11 +78,13 @@ if (!localStorage.getItem('token')) {
         }
     })
     .done((result) => {
+      console.log('masuk google')
       M.toast({html: `Welcome and wait a sec ...`, completeCallback: () => { 
         localStorage.setItem('token', result.token)
+        localStorage.setItem('isGoogle', 'true')
         page();
       }})
-
+  
     })
     .fail((err) => {
       err.responseJSON.forEach(i => {
@@ -96,6 +104,11 @@ function page() {
     $('#divLogin').hide();
     $('#divRegister').hide();
     $('#divTodo').show();
+    if (localStorage.getItem('isGoogle') === 'true') {
+      $('#btnAddEvent').show();
+    } else {
+      $('#btnAddEvent').hide();
+    }
     /// ambil data todos
       getAllTodos();
     // -----------------
@@ -107,6 +120,7 @@ function page() {
     $('#divTodo').hide();
   }
 }
+
 $(document).ready(() => {
   
   page();
@@ -137,6 +151,7 @@ $(document).ready(() => {
   
   $('#menuLogout').click(function() {
     localStorage.removeItem('token');
+    localStorage.removeItem('isGOogle');
     $('#dataTodos').empty();
     $('#divTodo').hide();
     $('#divRegister').hide();
@@ -241,22 +256,42 @@ $(document).ready(() => {
 
   $('#btnUpdateTodo').click(function () {
     if (selected) {
-      let todoId = selected.attr('data-todoId');
-      $.ajax({
-        url: `http://localhost:3000/todos/${todoId}`,
-        method: 'PUT',
-        headers: {
-          token: localStorage.getItem('token')
-        }
-      })
-      .done((result) => {
-        M.toast({html: `Completed`});
-        selected.remove();
-        selected = null;
-      })
-      .fail((err) => {
-        M.toast({html: `${JSON.stringify(err)}`});
-      })
+      if (selected.children()[2].innerText === 'Selesai') {
+        M.toast({html: `Sudah selesai`});
+      } else {
+        let todoId = selected.attr('data-todoId');
+        $.ajax({
+          url: `http://localhost:3000/todos/${todoId}`,
+          method: 'PUT',
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .done((result) => {
+          M.toast({html: `Completed`});
+          // ini append yang baru, caranya masihh salah makanya tidak muncul
+          // console.log(selected.children());
+          // console.log(selected.children()[0].innerText);
+          // console.log(selected.children()[1].innerText);
+          // console.log(selected.children()[2].innerText);
+          // console.log(selected.children()[3].innerText);
+  
+          $('#dataTodos').append(`
+          <tr class="todo" data-todoID="${todoId}">
+            <td>${selected.children()[0].innerText}</td>
+            <td>${selected.children()[1].innerText}</td>
+            <td>Selesai</td>
+            <td>${selected.children()[3].innerText}</td>
+          </tr>
+          `);
+          // caaaaaaaaara appned lebih ke biiiiiiiiiiiiiikiiiiiiiiiiiiiiiiin <li> yg baru
+          selected.remove();
+          selected = null;
+        })
+        .fail((err) => {
+          M.toast({html: `${JSON.stringify(err)}`});
+        })
+      }
     } else {
       M.toast({html: `Select 1 item to update!`});
     }
@@ -264,21 +299,26 @@ $(document).ready(() => {
   
   $('#btnAddEvent').click(function () {
     if (selected) {
-      let todoId = selected.attr('data-todoId');
-      $.ajax({
-        url: `http://localhost:3000/todos/event/${todoId}`,
-        method: 'GET',
-        headers: {
-          token: localStorage.getItem('token')
-        }
-      })
-      .done((result) => {
-        M.toast({html: `Success add to google calendar`});
-      })
-      .fail((err) => {
-        M.toast({html: `salaaa`});
-        // M.toast({html: `${JSON.stringify(err)}`});
-      })
+      if (selected.children()[2].innerText === 'Selesai') {
+        M.toast({html: `Sudah selesai`});
+      } else {
+        let todoId = selected.attr('data-todoId');
+        M.toast({html: "loading google calendar"})
+        $.ajax({
+          url: `http://localhost:3000/todos/event/${todoId}`,
+          method: 'GET',
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .done((result) => {
+          M.toast({html: `Success add to google calendar`});
+        })
+        .fail((err) => {
+          M.toast({html: `salaaa`});
+          // M.toast({html: `${JSON.stringify(err)}`});
+        })
+      }
     } else {
       M.toast({html: `Select 1 item to Google Calendar!`});
     }

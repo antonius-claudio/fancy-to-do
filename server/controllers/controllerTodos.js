@@ -39,7 +39,7 @@ class controllerTodos {
     }
 
     static getTodos(req, res, next){
-        Todo.findAll({ where: { UserId: req.UserId, status: 'Belum' } })
+        Todo.findAll({ where: { UserId: req.UserId }, order: [['status', 'ASC'], ['due_date', 'DESC']] })
             .then((todos) => {
                 res.status(200).json({ todos });
             })
